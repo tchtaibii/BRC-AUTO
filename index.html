@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./style.css">
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap"
+		rel="stylesheet">
+	<style>
+		body {
+			width: 100vw;
+			overflow-x: hidden;
+		}
+
+		.bg-hero {
+			background-image: url('img/hero_img.svg');
+			background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100.65%), url('img/hero_img.svg');
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			min-height: 80vh;
+			overflow-x: hidden;
+		}
+
+		.swiper-container {
+			overflow: hidden;
+		}
+
+		@font-face {
+			font-family: 'Gilroy';
+			src: url('fonts/Gilroy-Regular.ttf') format('truetype');
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		.card {
+			transform: scale(1);
+			transition: transform 0.3s ease-in-out;
+		}
+
+		.card:hover {
+			transform: scale(1.05);
+		}
+
+		.whatsapp-btn {
+			position: fixed;
+			/* position fixe pour toujours afficher le bouton */
+			bottom: 20px;
+			/* positionner le bouton en bas de la page */
+			right: 20px;
+			/* positionner le bouton à droite de la page */
+			background-color: #25d366;
+			/* couleur de fond du bouton */
+			color: #fff;
+			/* couleur du texte du bouton */
+			font-size: 16px;
+			/* taille de police du bouton */
+			padding: 20px 25px;
+			/* remplissage du bouton */
+			border-radius: 100%;
+			/* créer une forme de cercle */
+			text-decoration: none;
+			/* supprimer la soulignement du lien */
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			/* ombre portée du bouton */
+			z-index: 9999;
+			/* superposer le bouton sur les autres éléments */
+		}
+
+		.menu-icon {
+			display: block;
+			width: 32px;
+			height: 32px;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+		}
+
+		.menu-icon i {
+			display: block;
+			width: 100%;
+			height: 2px;
+			background-color: #fff;
+			position: relative;
+			transition: transform 0.3s ease-in-out;
+		}
+
+		.menu-icon i:before,
+		.menu-icon i:after {
+			content: "";
+			display: block;
+			width: 100%;
+			height: 100%;
+			background-color: #fff;
+			position: absolute;
+			transition: transform 0.3s ease-in-out;
+		}
+
+		.menu-icon i:before {
+			top: -10px;
+		}
+
+		.menu-icon i:after {
+			bottom: -10px;
+		}
+
+		.menu-icon.open i {
+			transform: rotate(45deg);
+		}
+
+		.menu-icon.open i:before {
+			transform: translateY(10px) rotate(90deg);
+		}
+
+		.menu-icon.open i:after {
+			transform: translateY(-10px) rotate(90deg);
+		}
+	</style>
+	<title>BRC Auto</title>
+</head>
+
+<body class="bg-gray-100">
+	<div class="bg-hero">
+		<nav class="container mx-auto px-4 py-6 mb-8">
+			<div class="flex items-center justify-between">
+				<div>
+					<a href="#" class="text-2xl font-bold"><img src="img/brc au o.svg" alt=""></a>
+				</div>
+				<div class="hidden min-[1290px]:flex gap-16">
+					<a href="#véhicules" class="text-lg text-white font-[Poppins] font-bold"
+						style="font-family: 'Gilroy', sans-serif;">Nos véhicules</a>
+					<a href="#propos" class="text-lg text-white font-[Poppins] font-bold"
+						style="font-family: 'Gilroy', sans-serif;">à propos</a>
+					<a href="#équipement" class="text-lg text-white font-[Poppins] font-bold"
+						style="font-family: 'Gilroy', sans-serif;">Nos équipement</a>
+					<a href="#Témoignage" class="text-lg text-white font-[Poppins] font-bold"
+						style="font-family: 'Gilroy', sans-serif;">Témoignage</a>
+				</div>
+				<div class="min-[1290px]:hidden">
+					<button type="button" class="menu-icon text-white hover:text-gray-400 focus:outline-none"
+						onclick="toggleMenu()">
+						<i class="fas fa-bars"></i> <!-- Add a responsive menu icon here -->
+					</button>
+				</div>
+				<div class="hidden" id="responsive-menu">
+					<a href="#véhicules" class="block text-lg text-white font-[Poppins] font-bold py-2"
+						style="font-family: 'Gilroy', sans-serif;">Nos véhicules</a>
+					<a href="#propos" class="block text-lg text-white font-[Poppins] font-bold py-2"
+						style="font-family: 'Gilroy', sans-serif;">à propos</a>
+					<a href="#équipement" class="block text-lg text-white font-[Poppins] font-bold py-2"
+						style="font-family: 'Gilroy', sans-serif;">Nos équipement</a>
+					<a href="#Témoignage" class="block text-lg text-white font-[Poppins] font-bold py-2"
+						style="font-family: 'Gilroy', sans-serif;">Témoignage</a>
+				</div>
+				<div
+					class="hidden min-[1290px]:block flex items-center bg-white rounded-full py-2 px-4 text-black font-[Poppins] font-bold">
+					<i class="fas fa-phone-alt mr-2"></i>
+					<span>+212 661 101 795</span>
+				</div>
+			</div>
+		</nav>
+		<section class="container mx-auto px-4 py-12 mb-8">
+			<div class="flex flex-col md:flex-row items-center justify-between">
+				<div class="w-full md:w-1/2 md:pr-8">
+					<h1 class="text-[40px] md:text-6xl font-[700] mb-4 text-white mb-12"
+						style="font-family: 'Gilroy', sans-serif;">Rent a car in the easiest way possible</h1>
+					<p class="text-lg text-white mb-8 font-[Poppins] font-[300] mt-12 mb-12"
+						style="font-family: 'Gilroy', sans-serif;">Nous vous offrons une large sélection de voitures de
+						qualité,
+						équipées de toutes les options pour un confort optimal. Appelez-nous dès maintenant pour
+						réserver votre
+						voiture et profiter de nos tarifs imbattables</p>
+					<div class="flex flex-wrap gap-4 md:mb-0 ">
+						<button
+							class="bg-white text-black text-[14px] px-6 py-2 rounded-full w-full md:w-auto font-[Poppins] font-semibold mb-4 md:mb-0"><a
+								href="https://wa.me/212661101795">Réservé maintenant</a> </button>
+						<button
+							class="border border-[#ffff] text-white text-[14px] px-6 py-2 rounded-full w-full md:w-auto font-[Poppins] font-semibold">Contactez
+							- nous </button>
+					</div>
+				</div>
+				<div class="mt-8 md:mt-0 justify-center md:justify-end gap-4">
+					<a href="https://web.facebook.com/brcauto.ma"
+						class="text-2xl text-blue-600 mx-2 hover:text-blue-800"><img src="img/facebook.svg" alt=""></a>
+					<a href="https://www.instagram.com/brcauto.ma/"
+						class="text-2xl text-blue-400 mx-2 hover:text-blue-600"><img src="img/instagram.svg" alt=""></a>
+					<a href="https://www.linkedin.com/company/brcautoma"
+						class="text-2xl text-red-600 mx-2 hover:text-red-800"><img src="img/linkdin.svg" alt=""></a>
+					<a href="#" class="text-2xl text-blue-300 mx-2 hover:text-blue-500"><img src="img/tiktok.svg"
+							alt=""></a>
+					<a href="#" id="scrollBtn" onclick="scrollToMiddle()"
+						class="text-2xl text-gray-600 hover:text-gray-800 z-10 relative"><img src="img/scrool.svg"
+							alt=""></a>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<a href="https://wa.me/+212661101795?text=Bonjour,%20j'ai%20une%20question%20pour%20vous." class="whatsapp-btn"><i
+			class="fab fa-whatsapp"></i> </a>
+	<script>
+		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+			var whatsappBtn = document.querySelector(".whatsapp-btn");
+			whatsappBtn.style.display = "block";
+		}
+	</script>
+
+
+	<div>
+		<div class="mt-[120px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
+			<div class="lg:col-span-3 sm:col-span-2">
+				<div class="text-center">
+					<h2 class="text-[#000 font-[500] text-3xl mb-6" style="font-family: 'Gilroy', sans-serif;">Louer n'a
+						jamais
+						<span class="font-[700]">été aussi Facile</span>
+					</h2>
+					<p class="text-[#000] font-[Poppins] font-[300] mb-6">Découvrez notre processus de location
+						simplifié pour une
+						expérience client sans souci.</p>
+				</div>
+			</div>
+			<div class="flex flex-col lg:flex-row gap-8 lg:gap-36">
+				<div id="etap1"
+					class=" text-[#EDDEDE] etap bg-[#F3F4F6] flex flex-col lg:items-start items-center lg:justify-start justify-center p-6 cursor-pointer">
+					<div class="flex items-center mb-6">
+						<img src="img/car.svg" alt="">
+						<p id="etapp1" class="text-9xl font-[Poppins] font-bold">1</p>
+						<img class="lg:inline hidden" src="img/Line 128.svg" alt="">
+					</div>
+					<h1 class="text-[#000] font-[Poppins] font-bold text-xl mb-6">Choisissez votre voiture</h1>
+					<p class="text-[#8D8D8D] lg:text-start lg:w-auto w-[310px]  text-center font-[Poppins] font-[400]">
+						Parcourez notre sélection de voitures de location et sélectionnez celle qui convient le mieux à
+						vos besoins.
+					</p>
+				</div>
+
+				<div id="etap2"
+					class="bg-[#F3F4F6] flex flex-col lg:items-start items-center lg:justify-start justify-center p-6 cursor-pointer">
+					<div class="flex items-center mb-6">
+						<img src="img/phone2.svg" alt="">
+						<p id="etapp2" class="text-9xl text-[#EDDEDE] font-[Poppins] font-bold">2</p>
+						<img class="lg:inline hidden" src="img/Line 128.svg" alt="">
+					</div>
+					<h1 class="text-[#000] font-[Poppins] font-bold text-xl mb-6">Réservez par téléphone</h1>
+					<p class="text-[#8D8D8D] lg:text-start lg:w-auto w-[310px]  text-center font-[Poppins] font-[400]">
+						Nos agents de réservation se feront un plaisir de vous aider à finaliser votre réservation et de
+						répondre à
+						toutes vos questions.
+					</p>
+				</div>
+				<div id="etap2"
+					class="bg-[#F3F4F6] flex flex-col lg:items-start items-center lg:justify-start justify-center p-6 cursor-pointer">
+					<div class="flex items-center mb-6">
+						<img src="img/boost.svg" alt="">
+						<p id="etapp3" class="text-9xl  text-[#EDDEDE] font-[Poppins] font-bold">3</p>
+					</div>
+					<h1 class="text-[#000] font-[Poppins] font-bold text-xl mb-6">Profitez de votre voiture</h1>
+					<p class="text-[#8D8D8D] lg:text-start lg:w-auto w-[310px]  text-center font-[Poppins] font-[400]">
+						Récupérez votre voiture à l'agence BRC Auto de Rabat et profitez de votre conduite en toute
+						sécurité et avec
+						style.
+					</p>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+	<div id="véhicules" class="mt-[140px] container mx-auto w-full py-8 véhicules vec">
+		<div class="w-full mx-auto">
+			<div class="swiper-container mx-auto  md:w-[80%] w-full">
+				<div class="swiper-wrapper w-full">
+					<!-- Slide 1 -->
+					<div class="swiper-slide">
+						<img class="w-[100vw] md:w-auto" src="img/fiat500.svg" alt="">
+					</div>
+					<!-- Slide 2 -->
+					<div class="swiper-slide">
+						<img class="w-[100vw] md:w-auto" src="img/Group 1000002999.png" alt="">
+					</div>
+					<!-- Slide 3 -->
+					<div class="swiper-slide">
+						<img class="w-[100vw] md:w-auto" src="img/tucson.svg" alt="">
+					</div>
+					<!-- Slide 4 -->
+					<div class="swiper-slide">
+						<img class="w-[100vw] md:w-auto" src="img/accent.svg" alt="">
+					</div>
+				</div>
+				<div class="swiper-button-prev-custom md:w-auto w-[20px]">
+					<img src="img/Left.svg" alt="Previous">
+				</div>
+
+				<div class="swiper-button-next-custom md:w-auto w-[20px]">
+					<img src="img/Right2.svg" alt="">
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+	<div class="mt-12 md:mt-[150px] flex flex-col lg:flex-row justify-center items-center lg:justify-between lg:items-start propos">
+		<div class="w-full md:w-1/4 mb-8 md:mb-0 lg:ml-12 lg:text-left text-center">
+			Nous sommes <br><span class="font-bold font-['Poppins'] text-4xl">brc auto</span>
+		</div>
+		<div class="space-y-8 w-full md:w-[632px] lg:text-start text-center">
+			<p class="font-['Poppins'] font-light">BRC Auto est une agence de location de voitures située à Rabat,
+				spécialisée
+				dans la location courte et longue durée de voitures pour les particuliers, les entreprises et les
+				entités. Nous
+				proposons une large gamme de voitures, de la citadine au SUV, équipées de tout le nécessaire pour vous
+				assurer
+				une conduite confortable et sécurisée.</p>
+			<p class="font-['Poppins'] font-light">Nos services sont conçus pour répondre aux besoins spécifiques des
+				entreprises
+				et des entités, avec des offres de location à long terme adaptées à vos besoins. Nous offrons des
+				services
+				personnalisés pour nos clients professionnels, notamment des voitures équipées d'une tente de camping,
+				d'une
+				trottinette électrique et d'une glacière, pour que vos déplacements professionnels soient aussi
+				agréables que
+				pratiques.
+				Nous sommes fiers de fournir un service de qualité à nos clients, avec une réservation facile et rapide
+				par
+				téléphone. Notre équipe professionnelle et expérimentée est à votre disposition pour répondre à toutes
+				vos
+				questions et vous conseiller dans votre choix de véhicule.</p>
+				<p id="hidden-par" class="font-['Poppins'] hidden font-light">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt accusamus nobis aut saepe quos voluptates voluptatibus? Iure quidem impedit minima laboriosam ipsa ut qui dicta saepe facilis, perspiciatis blanditiis id!</p>
+			<p id="btn-show" style="margin-bottom: 20px;" onclick="showmore()" class="flex font-['Poppins'] justify-center items-center gap-[11px] font-medium cursor-pointer">Voir plus
+				à propos de brc
+				auto <img class="mt-[5px]" src="img/Right.svg" alt=""></p>
+		</div>
+		<div class="md:w-auto pr-[-100px] mt-8 md:mt-0">
+			<img src="img/apropos.svg" alt="" class="w-auto">
+		</div>
+	</div>
+	<div class=" mt-[140px] bg-gradient-to-r  from-[#730F04] via-[#BD1506] to-[#BD1506]">
+		<div class=" p-4 md:flex md:justify-center gap-20 md:items-center">
+			<div class="md:w-auto w-1/2 md:mx-0 mx-auto">
+				<img src="img/carte.svg" alt="" class="">
+			</div>
+			<div class="md:w-auto w-1/2 mt-4 md:mt-0 md:ml-4 md:mr-4 md:mx-0 mx-auto">
+				<h3 class="text-white md:text-[30px] text-[20px] font-bold">Grand réseaux de la Location <br> de voitures au MAROC <br>
+					<span class="font-[300]"> avec un service client 24/7J</span>
+				</h3>
+				<button
+					class="flex items-center bg-black rounded-full py-2 px-4 mt-2 text-white font-[Poppins] font-bold">
+					<img src="img/location.svg" alt="">
+					<span class="ml-2">Notre localisation</span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="lg:ml-16 lg:mt-[150px] mt-[80px] lg:mb-[100px]" style="@media (min-width: 640px) {
+      .text-center {
+        text-align: left;
+      }
+      .text-left {
+        text-align: center;
+      }
+    }
+    ">
+		<h1 class="font-[Poppins] font-[300] text-3xl text-center sm:text-left">Vivez La Meilleure <br> <span
+				class="font-bold">Expérience Avec Nos Voitures</span></h1>
+	</div>
+
+
+	<div class="p-4 md:ml-12 md:mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 lg:gap-12" id="équipement">
+		<div class="flex flex-col items-center justify-center">
+			<img src="img/voiture.svg" alt="" class="w-full md:w-auto mx-auto">
+			<h1
+				class="font-bold text-2xl sm:text-3xl md:text-4xl text-center md:text-left mt-4 md:mt-[-20px] lg:mt-[-40px] md:ml-8">
+				TOUS NOS VOITURES SONT ÉQUIPÉ</h1>
+		</div>
+
+		<div class="tente flex flex-col md:ml-0 glow">
+			<div class="mb-4 flex flex-col items-center">
+				<img src="img/trotinette.svg" alt="" class="mx-auto">
+				<h4 class="font-bold text-lg sm:text-xl md:text-2xl mt-2 text-center">Trottinette électrique</h4>
+			</div>
+			<div class="mb-4 flex flex-col items-center">
+				<img src="img/glaciere.svg" alt="" class="mx-auto">
+				<h4 class="font-bold text-lg sm:text-xl md:text-2xl mt-2 text-center">Une Glacière</h4>
+			</div>
+			<div class="mb-4 flex flex-col items-center">
+				<img src="img/tente.svg" alt="" class="mx-auto">
+				<h4 class="font-bold text-lg sm:text-xl md:text-2xl mt-2 text-center">Tente de Camping</h4>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="lg:ml-16 lg:mt-[300px] mt-[40px]">
+		<h1 id="Témoignage" class="font-[Poppins] font-bold text-3xl lg:text-left text-center">Témoignage <span
+				class="font-[300] ">De Nos Clients</span></h1>
+	</div>
+
+
+	<div class="lg:mt-[140px]  container mx-auto flex just px-4 py-8 slider-container" id="Témoignage">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 owl-carousel sm:mx-auto z-10"
+			id="testimonial-slider">
+			<!-- Card 1 -->
+			<div class="bg-white rounded-lg p-6 w-full md:w-80 flex flex-col justify-center items-center h-[509px] card">
+				<p class="mb-8 text-center font-[Poppins] font-[400]">J'ai été ravi de louer une voiture chez BRC Auto.
+					Le
+					processus était simple et facile, et le personnel était très serviable. Je recommande vivement cette
+					agence de
+					location de voitures à tout le monde</p>
+				<img src="img/etoile.svg" alt="Image étoile" class="mb-4">
+				<img src="img/Ellipse 1.svg" alt="Client Image" class="w-20 h-20 rounded-full mb-4">
+				<h3 class="text-lg font-semibold mb-2 text-center">Ahmed</h3>
+				<p class="text-center font-[Poppins] font-[300] text-[#00000099]">Client Satisfait </p>
+			</div>
+
+			<!-- Card 2 -->
+			<div class="bg-white rounded-lg p-6 w-full md:w-80 flex flex-col justify-center items-center h-[509px] card">
+				<p class="mb-4 text-center font-[Poppins] font-[400]">Je suis un client fidèle de BRC Auto depuis des
+					années, et
+					je n'ai jamais été déçu de leur service. Les voitures sont toujours propres et bien entretenues, et
+					le
+					personnel est toujours prêt à aider. Je recommande fortement BRC Auto pour toute location de voiture
+					à Rabat
+				</p>
+				<img src="img/etoile.svg" alt="Image étoile" class="mb-4">
+				<img src="img/client2.svg" alt="Client Image" class="w-20 h-20 rounded-full mb-4">
+				<h3 class="text-lg font-semibold mb-2 text-center  font-[Poppins]">Fatima</h3>
+				<p class="text-center font-[Poppins] font-[300] text-[#00000099]">Cliente Fidéle</p>
+			</div>
+
+			<!-- Card 3 -->
+			<div class="bg-white rounded-lg p-6 w-full md:w-80 flex flex-col justify-center items-center h-[509px] card">
+				<p class="mb-8 text-center font-[Poppins] font-[400]">J'ai loué une voiture pour un voyage d'affaires
+					avec BRC
+					Auto, et je n'aurais pas pu être plus satisfait. Le processus était rapide et facile, et j'ai été
+					impressionné
+					par la qualité de la voiture. Je recommande vivement BRC Auto pour toute location de voiture à Rabat
+				</p>
+				<img src="img/etoile.svg" alt="Image étoile" class="mb-4">
+				<img src="img/client1.svg" alt="Client Image" class="w-20 h-20 rounded-full mb-4">
+				<h3 class="text-lg font-semibold mb-2 text-center  font-[Poppins]">Mehdi</h3>
+				<p class="text-center font-[Poppins] font-[300] text-[#00000099]">Client Satisfait </p>
+			</div>
+
+			<!-- Card 4 -->
+			<div class="bg-white rounded-lg p-6 w-full md:w-80 flex flex-col justify-center items-center h-[509px] card">
+				<p class="mb-4 text-center font-[Poppins] font-[400]">J'ai loué une voiture chez BRC Auto pour un voyage
+					d'affaires et j'ai été très satisfait de leur service. L'équipe était très professionnelle et
+					attentionnée, et
+					la voiture était en parfait état. J'ai également apprécié la flexibilité de leurs offres de location
+					à long
+					terme pour les entreprises. </p>
+				<img src="img/etoile.svg" alt="Image étoile" class="mb-4">
+				<img src="img/client3.svg" alt="Client Image" class="w-20 h-20 rounded-full mb-4">
+				<h3 class="text-lg font-semibold mb-2 text-center">Ahmed </h3>
+				<p class="text-center font-[Poppins] font-[300] text-[#00000099]">Entrepreneur</p>
+			</div>
+			<!-- Card 1 -->
+			<div class="bg-white rounded-lg p-6 w-full md:w-80 flex flex-col justify-center items-center h-[509px] card">
+				<p class="mb-8 text-center font-[Poppins] font-[400]">J'ai été ravi de louer une voiture chez BRC Auto.
+					Le
+					processus était simple et facile, et le personnel était très serviable. Je recommande vivement cette
+					agence de
+					location de voitures à tout le monde</p>
+				<img src="img/etoile.svg" alt="Image étoile" class="mb-4">
+				<img src="img/Ellipse 1.svg" alt="Client Image" class="w-20 h-20 rounded-full mb-4">
+				<h3 class="text-lg font-semibold mb-2 text-center">Ahmed</h3>
+				<p class="text-center font-[Poppins] font-[300] text-[#00000099]">Client Satisfait </p>
+			</div>
+
+			<!-- Card 2 -->
+			<div class="bg-white rounded-lg p-6 w-full md:w-80 flex flex-col justify-center items-center h-[509px] card">
+				<p class="mb-4 text-center font-[Poppins] font-[400]">Je suis un client fidèle de BRC Auto depuis des
+					années, et
+					je n'ai jamais été déçu de leur service. Les voitures sont toujours propres et bien entretenues, et
+					le
+					personnel est toujours prêt à aider. Je recommande fortement BRC Auto pour toute location de voiture
+					à Rabat
+				</p>
+				<img src="img/etoile.svg" alt="Image étoile" class="mb-4">
+				<img src="img/client2.svg" alt="Client Image" class="w-20 h-20 rounded-full mb-4">
+				<h3 class="text-lg font-semibold mb-2 text-center  font-[Poppins]">Fatima</h3>
+				<p class="text-center font-[Poppins] font-[300] text-[#00000099]">Cliente Fidéle</p>
+			</div>
+
+			<!-- Card 3 -->
+			<div class="bg-white rounded-lg p-6 w-full md:w-80 flex flex-col justify-center items-center h-[509px] card">
+				<p class="mb-8 text-center font-[Poppins] font-[400]">J'ai loué une voiture pour un voyage d'affaires
+					avec BRC
+					Auto, et je n'aurais pas pu être plus satisfait. Le processus était rapide et facile, et j'ai été
+					impressionné
+					par la qualité de la voiture. Je recommande vivement BRC Auto pour toute location de voiture à Rabat
+				</p>
+				<img src="img/etoile.svg" alt="Image étoile" class="mb-4">
+				<img src="img/client1.svg" alt="Client Image" class="w-20 h-20 rounded-full mb-4">
+				<h3 class="text-lg font-semibold mb-2 text-center  font-[Poppins]">Mehdi</h3>
+				<p class="text-center font-[Poppins] font-[300] text-[#00000099]">Client Satisfait </p>
+			</div>
+
+			<!-- Card 4 -->
+			<div class="bg-white rounded-lg p-6 w-full md:w-80 flex flex-col justify-center items-center h-[509px] card">
+				<p class="mb-4 text-center font-[Poppins] font-[400]">J'ai loué une voiture chez BRC Auto pour un voyage
+					d'affaires et j'ai été très satisfait de leur service. L'équipe était très professionnelle et
+					attentionnée, et
+					la voiture était en parfait état. J'ai également apprécié la flexibilité de leurs offres de location
+					à long
+					terme pour les entreprises. </p>
+				<img src="img/etoile.svg" alt="Image étoile" class="mb-4">
+				<img src="img/client3.svg" alt="Client Image" class="w-20 h-20 rounded-full mb-4">
+				<h3 class="text-lg font-semibold mb-2 text-center">Ahmed </h3>
+				<p class="text-center font-[Poppins] font-[300] text-[#00000099]">Entrepreneur</p>
+			</div>
+		</div>
+	</div>
+	<section class="lg:mt-[140px] bg-gray-100 py-12">
+		<div class="container mx-auto px-4">
+			<div class="flex flex-wrap -mx-4">
+				<div class="w-full md:w-1/2">
+					<img src="img/faq.svg" alt="FAQ Image" class="w-full h-auto mb-4 lg:ml-[-200px]">
+				</div>
+				<div class="flex flex-col w-full md:w-1/2 px-4 gap-[24px] glow">
+					<div class="z-10">
+						<div class="mb-4 z-10">
+							<div style="background: linear-gradient(90.4deg, #750F04 0.9%, #BC1506 100%);"
+								class="questions flex items-center rounded-lg justify-between cursor-pointer mb-4 p-6 sm:w-full md:pl-[40px]"
+								onclick="toggleAnswer(1)">
+								<h2 class="text-lg text-white font-bold font-[Poppins] faq-question">Comment puis-je
+									louer une voiture chez BRC Auto ?</h2>
+								<button class="text-white px-4 py-2 rounded-lg"><img src="img/Icon.svg" alt=""></button>
+							</div>
+							<div class="z-0 p-6 md:pl-[40px] anwserC" id="answer1">
+								<p class="text-gray-700">Vous pouvez louer une voiture chez BRC Auto en appelant notre
+									service de réservation téléphonique. Nous vous aiderons à choisir le véhicule qui
+									convient le mieux à vos besoins et nous nous occuperons du reste.</p>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="z-10">
+						<div class="mb-4 z-10">
+							<div
+								class="flex questions items-center rounded-lg justify-between cursor-pointer mb-4 p-6 sm:w-full md:pl-[40px]  bg-white">
+								<h2 class="text-lg text-black font-bold font-[Poppins] faq-question"
+									onclick="toggleAnswer(2)">Quels sont les
+									documents nécessaires pour louer une voiture ?</h2>
+								<button class="text-white px-4 py-2 rounded-lg"><img src="img/Icon.svg" alt=""></button>
+							</div>
+							<div class="p-6 z-0 md:pl-[40px] hidden anwserC" id="answer2">
+								<p class="text-gray-700">Pour louer une voiture vous devez avoir un permis valide et une
+									CIN (carte d’identité national ) ou un passeport </p>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="z-10">
+						<div class="mb-4 z-10">
+							<div
+								class="flex questions items-center rounded-lg justify-between cursor-pointer mb-4 p-6 sm:w-full md:pl-[40px]  bg-white">
+								<h2 class="text-lg text-black font-bold font-[Poppins] faq-question"
+									onclick="toggleAnswer(3)">Quels types de
+									voitures BRC Auto propose-t-il à la location ?</h2>
+								<button class="text-white px-4 py-2 rounded-lg"><img src="img/Icon.svg" alt=""></button>
+							</div>
+							<div class="p-6 z-0 pl-[40px] hidden anwserC" id="answer3">
+								<p class="text-gray-700">Pour louer une voiture vous devez avoir un permis valide et une
+									CIN &lt;br&gt; (carte d’identité national) ou un passeport</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="z-10">
+						<div class="mb-4 z-10">
+							<div
+								class="flex questions items-center rounded-lg justify-between cursor-pointer mb-4 p-6 sm:w-full md:pl-[40px]  bg-white">
+								<h2 class="text-lg text-black font-bold font-[Poppins] faq-question"
+									onclick="toggleAnswer(4)">BRC Auto
+									propose-t-il des services de location à long terme pour les entreprises ? </h2>
+								<button class="text-white px-4 py-2 rounded-lg"><img src="img/Icon.svg" alt=""></button>
+							</div>
+							<div class="p-6 z-0 pl-[40px] hidden anwserC" id="answer4">
+								<p class="text-gray-700">Chez BRC Auto, nous proposons une large gamme de véhicules,
+									allant des citadines économiques aux voitures de luxe et aux SUV spacieux. Nous nous
+									engageons à fournir des voitures de qualité pour répondre aux besoins de tous nos
+									clients.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+	<footer class="relative z-10 bg-black pt-20 pb-10 lg:pt-[120px] lg:pb-20">
+		<div class="container mx-auto grid gap-10 lg:grid-cols-3">
+			<div class="px-4">
+				<div id="propos" class="mb-10">
+					<a href="#" class="inline-block mb-6 max-w-[160px]">
+						<img src="img/brc au o.svg" alt="Logo" class="max-w-full">
+					</a>
+					<p class="text-white mb-7">
+						BRCAuto est une agence de location de voitures basée au Maroc, offrant une large gamme de
+						véhicules pour
+						répondre aux besoins de tous les types de clients, qu'ils soient particuliers ou professionnels.
+						Avec une
+						flotte de voitures neuves et bien entretenues, BRCAuto se distingue par son service personnalisé
+						et son
+						engagement envers la satisfaction du client.
+					</p>
+					<div class="text-dark  items-center text-sm font-medium">
+						<p class="text-white font-[Poppins] mb-4">Appelez-nous <span
+								class="font-[Poppins] font-semibold">Maintenant</span></p>
+						<h1 class="text-white text-3xl font-[Poppins] font-semibold  mb-4">+212 661 101 795</h1>
+						<p class="text-white">Contact@brcauto.ma</p>
+					</div>
+				</div>
+			</div>
+			<div class="px-4">
+				<div class="mb-10">
+					<ul>
+						<li>
+							<h1
+								class="text-white hover:text-primary mb-2 inline-block text-base leading-loose font-[Poppins] font-bold">
+								Pages</a>
+						</li>
+						<li>
+							<a href="#propos"
+								class="text-white hover:text-primary mb-2 inline-block text-base leading-loose">à
+								propos</a>
+						</li>
+						<li>
+							<a href="#véhicules"
+								class="text-white hover:text-primary mb-2 inline-block text-base leading-loose">Nos
+								véhicules</a>
+						</li>
+						<li>
+							<a href="#Témoignage"
+								class="text-white hover:text-primary mb-2 inline-block text-base leading-loose">Témoignage
+								nos
+								clients</a>
+						</li>
+						<li>
+							<a href="#quest"
+								class="text-white hover:text-primary mb-2 inline-block text-base leading-loose">Questions
+								Fréquente</a>
+						</li>
+					</ul>
+					<div class="flex items-stretch mt-12">
+						<input
+							class="bg-white rounded-lg rounded-r-none text-base leading-none text-gray-800 p-5 w-full border border-transparent focus:outline-none focus:border-gray-500"
+							type="email" placeholder="Email">
+						<button
+							class="w-32 rounded-l-none bg-[#BC1405] rounded text-base font-medium leading-none text-white p-5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700">S'abonner</button>
+					</div>
+				</div>
+			</div>
+			<div class="px-4 w-fit">
+				<div class="mb-10">
+					<h4 class="text-white mb-9 text-lg font-semibold">Notre Localisation</h4>
+					<div class="mb-6 flex flex-col ">
+						<img class="w-[223px]" src="./img/map.svg" alt="" srcset="">
+						<div class="flex flex-row mt-[55px] w-full items-center justify-end gap-[27px]">
+							<a href="https://web.facebook.com/brcauto.ma"><img src="./img/f.svg" alt="" srcset=""></a>
+							<a href=""><img src="./img/tktk.svg" alt="" srcset=""></a>
+							<a href="https://www.linkedin.com/company/brcautoma"><img src="./img/in.svg" alt=""
+									srcset=""></a>
+							<a href="https://www.instagram.com/brcauto.ma/"><img src="./img/ig.svg" alt=""
+									srcset=""></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</footer>
+	<!-- ====== Footer Section End -->
+
+</body>
+<script>
+	function toggleAnswer(index) {
+		var answer = document.getElementById("answer" + index);
+		var question = answer.previousElementSibling;
+		var container = question.parentElement;
+		var anwserArray = Array.from(document.querySelectorAll(".anwserC")).filter(e => e != answer);
+		anwserArray.forEach(element => {
+			element.classList.add('hidden');
+			element.previousElementSibling.style.background = "white";
+			element.previousElementSibling.children[0].style.color = "black";
+		});
+		question.classList.toggle("bg-");
+		container.classList.toggle("mb-4");
+		if (answer.classList.contains("hidden")) {
+			question.style.background = "linear-gradient(90.4deg, #750F04 0.9%, #BC1506 100%)";
+			question.children[0].style.color = "white";
+			answer.classList.toggle("anwser-on");
+		}
+		else {
+			question.style.background = "white";
+			question.children[0].style.color = "black";
+		}
+		answer.classList.toggle("hidden");
+
+
+
+	}
+</script>
+<!-- Add Swiper's JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+	const swiper = new Swiper('.swiper-container', {
+		slidesPerView: 1,
+		autoplay: {
+			delay: 5000,
+		},
+		spaceBetween: 0,
+		navigation: {
+			nextEl: '.swiper-button-next-custom',
+			prevEl: '.swiper-button-prev-custom',
+		},
+	});
+</script>
+<script>
+	// Function to scroll to the middle of the page smoothly
+	function scrollToMiddle() {
+		const middlePosition = document.body.scrollHeight / 2;
+
+		window.scrollTo({
+			top: middlePosition,
+			behavior: "smooth"
+		});
+	}
+</script>
+<script>
+	function showmore()
+	{
+		var parrag = document.getElementById('hidden-par');
+		var btnShow = document.getElementById('btn-show');
+		if (!parrag.classList.contains('hidden'))
+			btnShow.innerHTML = 'Voir plus à propos de brc auto <img class="mt-[5px]" src="img/Right.svg" alt="">';
+		else
+			btnShow.innerHTML = 'Show less <img class="mt-[5px]" src="img/Right.svg" alt="">';
+		parrag.classList.toggle('hidden');
+
+		
+	}
+</script>
+<script>
+	function toggleMenu() {
+		var menu = document.getElementById("responsive-menu");
+		var icon = document.querySelector(".menu-icon");
+		if (menu.style.display === "block") {
+			menu.style.display = "none";
+			icon.classList.remove("open");
+		} else {
+			menu.style.display = "block";
+			icon.classList.add("open");
+		}
+	}
+</script>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$("#testimonial-slider").owlCarousel({
+			items: 4,
+			itemsDesktop: [1500, 3],
+			itemsDesktopSmall: [1200, 2],
+			itemsTablet: [800, 1],
+			itemsMobile: [650, 1],
+			pagination: true,
+			navigation: false,
+			slideSpeed: 1000,
+			autoPlay: true
+		});
+	});
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
+
+</html>
